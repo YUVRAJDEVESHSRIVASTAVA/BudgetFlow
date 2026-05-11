@@ -1,6 +1,6 @@
 # API Docs
 
-The canonical API list lives in the root [README](../README.md).
+This is the quick API reference. For full request details, use [api-reference.md](api-reference.md). The docs hub lives in [README.md](README.md).
 
 Quick reference:
 

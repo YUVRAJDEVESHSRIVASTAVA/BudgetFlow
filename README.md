@@ -4,6 +4,8 @@
 
 Repository: [BudgetFlow](https://github.com/YUVRAJDEVESHSRIVASTAVA/BudgetFlow)
 
+Full documentation: [docs/README.md](docs/README.md)
+
 ## Highlights
 
 - Register and log in with JWT-backed authentication.
