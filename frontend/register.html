@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}ExpenseFlow | Register{% endblock %}
+{% block content %}
+<section class="auth-grid">
+  <div class="auth-copy glass-card">
+    <p class="eyebrow">Create your account</p>
+    <h1>Start tracking money with a calm, readable dashboard.</h1>
+    <p>Register once, then capture expenses, categories, and monthly totals in one place.</p>
+  </div>
+  <form id="register-form" class="auth-card glass-card">
+    <h2>Create account</h2>
+    <div class="form-grid">
+      <label>
+        Username
+        <input type="text" name="username" autocomplete="username" required>
+      </label>
+      <label>
+        Email
+        <input type="email" name="email" autocomplete="email" required>
+      </label>
+      <label>
+        First name
+        <input type="text" name="first_name" autocomplete="given-name">
+      </label>
+      <label>
+        Last name
+        <input type="text" name="last_name" autocomplete="family-name">
+      </label>
+    </div>
+    <label>
+      Password
+      <input type="password" name="password" autocomplete="new-password" required>
+    </label>
+    <label>
+      Confirm password
+      <input type="password" name="confirm_password" autocomplete="new-password" required>
+    </label>
+    <button class="button button-primary" type="submit">Create account</button>
+    <p class="form-note">Already have an account? <a href="/login/">Login</a></p>
+    <p id="register-message" class="form-message" aria-live="polite"></p>
+  </form>
+</section>
+{% endblock %}
+{% block scripts %}
+<script type="module" src="{% static 'js/auth.js' %}?v=20260510-2"></script>
+{% endblock %}

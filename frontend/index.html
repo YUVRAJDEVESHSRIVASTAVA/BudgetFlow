@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}ExpenseFlow | Track money with clarity{% endblock %}
+{% block content %}
+<section class="hero-grid">
+  <div class="hero-copy">
+    <p class="eyebrow">Simple expense tracking</p>
+    <h1>Keep every expense visible, organized, and easy to act on.</h1>
+    <p class="lead">ExpenseFlow gives you a clean dashboard for categories, transactions, and monthly totals without clutter.</p>
+    <div class="hero-actions">
+      <a class="button button-primary" href="/register/">Get started</a>
+      <a class="button button-secondary" href="/login/">Sign in</a>
+    </div>
+    <div class="feature-row">
+      <article class="feature-card">
+        <h3>Fast entry</h3>
+        <p>Add transactions in seconds and keep categories tidy.</p>
+      </article>
+      <article class="feature-card">
+        <h3>Clear summary</h3>
+        <p>See month-to-date totals and recent activity at a glance.</p>
+      </article>
+      <article class="feature-card">
+        <h3>JWT auth</h3>
+        <p>Secure API login with refreshable access tokens.</p>
+      </article>
+    </div>
+  </div>
+  <div class="hero-panel glass-card">
+    <p class="eyebrow">Dashboard preview</p>
+    <div class="stat-preview">
+      <div>
+        <span>Total spent</span>
+        <strong data-preview-total-spent>N/A</strong>
+      </div>
+      <div>
+        <span>Monthly budget</span>
+        <strong data-preview-monthly-budget>N/A</strong>
+      </div>
+    </div>
+    <div class="preview-list">
+      <div><span>Groceries</span><strong data-preview-category-1>N/A</strong></div>
+      <div><span>Transport</span><strong data-preview-category-2>N/A</strong></div>
+      <div><span>Subscriptions</span><strong data-preview-category-3>N/A</strong></div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script type="module" src="{% static 'js/home.js' %}?v=20260510-2"></script>
+{% endblock %}

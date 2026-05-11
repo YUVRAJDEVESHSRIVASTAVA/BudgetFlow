@@ -1,0 +1,7 @@
+-- ExpenseFlow schema is managed by Django migrations.
+-- Use `python manage.py migrate` instead of applying this file directly.
+--
+-- Conceptual entities:
+-- - accounts_user
+-- - expenses_category
+-- - expenses_expense

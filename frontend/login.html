@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}ExpenseFlow | Login{% endblock %}
+{% block content %}
+<section class="auth-grid">
+  <div class="auth-copy glass-card">
+    <p class="eyebrow">Welcome back</p>
+    <h1>Sign in to your expense dashboard.</h1>
+    <p>Review transactions, manage categories, and keep your spending under control.</p>
+  </div>
+  <form id="login-form" class="auth-card glass-card">
+    <h2>Login</h2>
+    <label>
+      Username or email
+      <input type="text" name="identifier" autocomplete="username" required>
+    </label>
+    <label>
+      Password
+      <input type="password" name="password" autocomplete="current-password" required>
+    </label>
+    <button class="button button-primary" type="submit">Login</button>
+    <p class="form-note">Need an account? <a href="/register/">Create one</a></p>
+    <p id="login-message" class="form-message" aria-live="polite"></p>
+  </form>
+</section>
+{% endblock %}
+{% block scripts %}
+<script type="module" src="{% static 'js/auth.js' %}?v=20260510-2"></script>
+{% endblock %}

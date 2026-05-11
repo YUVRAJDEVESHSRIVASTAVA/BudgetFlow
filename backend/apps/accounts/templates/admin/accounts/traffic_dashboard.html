@@ -1,0 +1,190 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}Traffic dashboard{% endblock %}
+
+{% block content %}
+<div class="traffic-dashboard">
+  <div class="traffic-header">
+    <h1>Traffic dashboard</h1>
+    <p>Track how many users exist and review login and logout activity with timestamps.</p>
+  </div>
+
+  <div class="traffic-grid">
+    <section class="traffic-card">
+      <span class="traffic-label">Total users</span>
+      <strong class="traffic-value">{{ summary.total_users }}</strong>
+    </section>
+    <section class="traffic-card">
+      <span class="traffic-label">Login events</span>
+      <strong class="traffic-value">{{ summary.login_events }}</strong>
+    </section>
+    <section class="traffic-card">
+      <span class="traffic-label">Logout events</span>
+      <strong class="traffic-value">{{ summary.logout_events }}</strong>
+    </section>
+    <section class="traffic-card">
+      <span class="traffic-label">Active users</span>
+      <strong class="traffic-value">{{ summary.active_users }}</strong>
+    </section>
+    <section class="traffic-card">
+      <span class="traffic-label">Last login</span>
+      <strong class="traffic-value">
+        {% if summary.last_login %}{{ summary.last_login|date:"M j, Y H:i" }}{% else %}N/A{% endif %}
+      </strong>
+    </section>
+    <section class="traffic-card">
+      <span class="traffic-label">Last logout</span>
+      <strong class="traffic-value">
+        {% if summary.last_logout %}{{ summary.last_logout|date:"M j, Y H:i" }}{% else %}N/A{% endif %}
+      </strong>
+    </section>
+  </div>
+
+  <section class="module traffic-table-wrap">
+    <h2>Recent login and logout activity</h2>
+    <div class="results">
+      <table>
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Event</th>
+            <th>User</th>
+            <th>Identifier</th>
+            <th>IP address</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for event in recent_events %}
+            <tr>
+              <td>{{ event.created_at|date:"M j, Y H:i" }}</td>
+              <td>{{ event.get_event_type_display }}</td>
+              <td>{{ event.user.username }}</td>
+              <td>{{ event.identifier|default:"-" }}</td>
+              <td>{{ event.ip_address|default:"-" }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="5">No login activity yet.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="module traffic-table-wrap">
+    <h2>Per-user activity</h2>
+    <div class="results">
+      <table>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Email</th>
+            <th>Login count</th>
+            <th>Logout count</th>
+            <th>Last login</th>
+            <th>Last logout</th>
+            <th>Last activity</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in user_activity %}
+            <tr>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email|default:"-" }}</td>
+              <td>{{ user.login_count }}</td>
+              <td>{{ user.logout_count }}</td>
+              <td>
+                {% if user.last_login_event_at %}
+                  {{ user.last_login_event_at|date:"M j, Y H:i" }}
+                {% else %}
+                  N/A
+                {% endif %}
+              </td>
+              <td>
+                {% if user.last_logout_event_at %}
+                  {{ user.last_logout_event_at|date:"M j, Y H:i" }}
+                {% else %}
+                  N/A
+                {% endif %}
+              </td>
+              <td>
+                {% if user.last_activity_at %}
+                  {{ user.last_activity_at|date:"M j, Y H:i" }}
+                {% else %}
+                  N/A
+                {% endif %}
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="7">No users found.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<style>
+  .traffic-dashboard {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .traffic-header p {
+    margin: 0.35rem 0 0;
+    color: var(--body-quiet-color);
+  }
+
+  .traffic-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .traffic-card {
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--hairline-color);
+    border-radius: 12px;
+    background: var(--body-bg);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+
+  .traffic-label {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: var(--body-quiet-color);
+    font-size: 0.9rem;
+  }
+
+  .traffic-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--body-fg);
+    word-break: break-word;
+  }
+
+  .traffic-table-wrap h2 {
+    margin: 0 0 1rem;
+  }
+
+  .traffic-table-wrap table {
+    width: 100%;
+  }
+
+  .traffic-table-wrap th,
+  .traffic-table-wrap td {
+    white-space: nowrap;
+  }
+
+  .traffic-table-wrap td:last-child,
+  .traffic-table-wrap th:last-child {
+    white-space: normal;
+  }
+</style>
+{% endblock %}

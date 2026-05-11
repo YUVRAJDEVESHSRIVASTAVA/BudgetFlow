@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}ExpenseFlow{% endblock %}</title>
+  <script>
+    (() => {
+      try {
+        const storageKey = "expenseflow.theme";
+        const savedTheme = window.localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const theme = savedTheme || (prefersDark ? "dark" : "light");
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      } catch (error) {
+        document.documentElement.dataset.theme = "light";
+        document.documentElement.style.colorScheme = "light";
+      }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260510-2">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}?v=20260510-2">
+  <link rel="stylesheet" href="{% static 'css/responsive.css' %}?v=20260510-2">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <div class="app-background"></div>
+  {% include 'components/navbar.html' %}
+  <main class="page-shell">
+    {% block content %}{% endblock %}
+  </main>
+  <script type="module" src="{% static 'js/theme.js' %}?v=20260510-2"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

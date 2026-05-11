@@ -1,0 +1,2 @@
+-- Sample data for ExpenseFlow is best loaded through the Django admin or fixtures.
+-- This file is intentionally left as a placeholder for export/import workflows.
