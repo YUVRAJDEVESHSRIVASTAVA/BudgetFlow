@@ -1,6 +1,6 @@
 # BudgetFlow
 
-BudgetFlow is a Django-based personal finance tracker for logging expenses, managing categories, and reviewing spending from a browser dashboard or REST API. It uses JWT authentication, a custom user model, and an admin traffic dashboard for monitoring login and logout activity.
+ BudgetFlow is a Django-based personal finance tracker for logging expenses, managing categories, and reviewing spending from a browser dashboard or REST API. It combines JWT authentication, a custom user model, and an admin traffic dashboard so you can follow both spending behavior and account activity in one place. The project also includes demo seed data, screenshots, and a simple local setup flow to make testing and presentation easier.
 
 Repository: [BudgetFlow](https://github.com/YUVRAJDEVESHSRIVASTAVA/BudgetFlow)
 
