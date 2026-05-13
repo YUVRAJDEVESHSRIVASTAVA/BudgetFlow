@@ -50,7 +50,7 @@ Render can automatically deploy from your `render.yaml` file:
    - **Name:** `expenseflow-api`
    - **Environment:** `Python 3`
    - **Build Command:** `bash ./build.sh`
-   - **Start Command:** `gunicorn expense_tracker.wsgi:application --bind 0.0.0.0:$PORT`
+   - **Start Command:** `cd backend && gunicorn expense_tracker.wsgi:application --bind 0.0.0.0:$PORT`
 4. Click **"Create Web Service"**
 
 **Create PostgreSQL Database:**
@@ -156,9 +156,11 @@ Re-deploy on Render.
 **Cause:** STATIC_ROOT not set or WhiteNoise not installed.
 
 **Fix:**
-1. Verify `whitenoise` is in `requirements-prod.txt`
+1. Verify `whitenoise` is in `backend/requirements.txt`
 2. Ensure `settings.py` has `STATIC_ROOT` configured
 3. Re-deploy
+
+If you use the root-level Render build, make sure the top-level `requirements.txt` points to `backend/requirements.txt`.
 
 ### Issue: Database Connection Failed
 

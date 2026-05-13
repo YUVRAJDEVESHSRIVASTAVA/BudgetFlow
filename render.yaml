@@ -4,7 +4,7 @@ services:
     env: python
     plan: free
     buildCommand: bash ./build.sh
-    startCommand: gunicorn expense_tracker.wsgi:application --bind 0.0.0.0:$PORT
+    startCommand: cd backend && gunicorn expense_tracker.wsgi:application --bind 0.0.0.0:$PORT
     healthCheckPath: /
     envVars:
       - key: DJANGO_SETTINGS_MODULE
@@ -12,7 +12,7 @@ services:
       - key: DJANGO_DEBUG
         value: false
       - key: PYTHON_VERSION
-        value: 3.9.19
+        value: 3.12.8
     envVarGroups:
       - id: render
         vars:
