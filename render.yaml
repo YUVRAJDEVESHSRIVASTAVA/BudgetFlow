@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: expenseflow-api
+    env: python
+    plan: free
+    buildCommand: bash ./build.sh
+    startCommand: gunicorn expense_tracker.wsgi:application --bind 0.0.0.0:$PORT
+    healthCheckPath: /
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: expense_tracker.settings
+      - key: DJANGO_DEBUG
+        value: false
+      - key: PYTHON_VERSION
+        value: 3.9.19
+    envVarGroups:
+      - id: render
+        vars:
+          - key: DATABASE_URL
+            fromDatabase:
+              name: expenseflow-db
+              property: connectionString
+          - key: DJANGO_SECRET_KEY
+            sync: false
+
+  - type: pserv
+    name: expenseflow-db
+    dbName: expenseflow
+    ipAllowList: []
+    plan: free
