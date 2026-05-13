@@ -13,7 +13,7 @@ PROJECT_ROOT = BASE_DIR.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-please-set-a-long-random-secret-key-64chars-min")
 DEBUG = os.getenv("DJANGO_DEBUG", "false").lower() == "true"
 
-# Production should have explicit allowed hosts
+# Parse ALLOWED_HOSTS from environment
 if DEBUG:
     allowed_hosts_str = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1")
 else:
@@ -22,8 +22,14 @@ else:
 allowed_hosts = allowed_hosts_str.split(",") if allowed_hosts_str else []
 ALLOWED_HOSTS = [host.strip() for host in allowed_hosts if host.strip()]
 
-# Add wildcard for Render domains in production
-if not DEBUG and ALLOWED_HOSTS:
+# In production, ensure we allow Render domains
+if not DEBUG:
+    # Always allow localhost for migrations and health checks
+    if "localhost" not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append("localhost")
+    if "127.0.0.1" not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append("127.0.0.1")
+    # Allow all Render domains
     if not any("onrender.com" in host for host in ALLOWED_HOSTS):
         ALLOWED_HOSTS.append("*.onrender.com")
 
