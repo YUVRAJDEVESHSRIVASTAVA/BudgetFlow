@@ -11,10 +11,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_ROOT = BASE_DIR.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-please-set-a-long-random-secret-key-64chars-min")
-DEBUG = os.getenv("DJANGO_DEBUG", "true").lower() == "true"
+DEBUG = os.getenv("DJANGO_DEBUG", "false").lower() == "true"
 
-allowed_hosts = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+# Production should have explicit allowed hosts
+if DEBUG:
+    allowed_hosts_str = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1")
+else:
+    allowed_hosts_str = os.getenv("DJANGO_ALLOWED_HOSTS", "")
+
+allowed_hosts = allowed_hosts_str.split(",") if allowed_hosts_str else []
 ALLOWED_HOSTS = [host.strip() for host in allowed_hosts if host.strip()]
+
+# Add wildcard for Render domains in production
+if not DEBUG and ALLOWED_HOSTS:
+    if not any("onrender.com" in host for host in ALLOWED_HOSTS):
+        ALLOWED_HOSTS.append("*.onrender.com")
 
 INSTALLED_APPS = [
     "django.contrib.admin",

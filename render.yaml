@@ -11,6 +11,8 @@ services:
         value: expense_tracker.settings
       - key: DJANGO_DEBUG
         value: false
+      - key: DJANGO_ALLOWED_HOSTS
+        value: ""
       - key: PYTHON_VERSION
         value: 3.12.8
     envVarGroups:
