@@ -63,11 +63,11 @@ TEMPLATES = [
 WSGI_APPLICATION = "expense_tracker.wsgi.application"
 ASGI_APPLICATION = "expense_tracker.asgi.application"
 
-DATABASES = {dj_database_url.config(
-        default="sqlite:///db.sqlite3",
+DATABASES = {
+    "default": dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600,
-    )   "NAME": BASE_DIR / "db.sqlite3",
-    }
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
