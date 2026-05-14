@@ -22,6 +22,14 @@ else:
 allowed_hosts = allowed_hosts_str.split(",") if allowed_hosts_str else []
 ALLOWED_HOSTS = [host.strip() for host in allowed_hosts if host.strip()]
 
+
+def _trusted_origin_for_host(host):
+    if host.startswith(("http://", "https://")):
+        return host
+
+    scheme = "http" if host in {"localhost", "127.0.0.1"} else "https"
+    return f"{scheme}://{host}"
+
 # In production, ensure we allow Render domains
 if not DEBUG:
     # Always allow localhost for migrations and health checks
@@ -136,7 +144,11 @@ LOGOUT_REDIRECT_URL = "/login/"
 SECURE_SSL_REDIRECT = not DEBUG
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
-CSRF_TRUSTED_ORIGINS = allowed_hosts
+CSRF_TRUSTED_ORIGINS = [
+    origin
+    for origin in (_trusted_origin_for_host(host) for host in ALLOWED_HOSTS)
+    if origin
+]
 SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0
 SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
 SECURE_HSTS_PRELOAD = not DEBUG
